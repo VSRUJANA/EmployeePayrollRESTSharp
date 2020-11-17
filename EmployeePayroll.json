@@ -21,8 +21,8 @@
       "Salary": "90000"
     },
     {
-      "name": "Natasha Romanuff",
-      "Salary": "85000",
+      "name": "Natasha Romanoff",
+      "salary": 60000,
       "id": 5
     },
     {
