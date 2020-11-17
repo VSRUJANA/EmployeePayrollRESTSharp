@@ -21,12 +21,24 @@
       "Salary": "90000"
     },
     {
+      "name": "Natasha Romanuff",
+      "Salary": "85000",
       "id": 5
     },
     {
-      "name": "Natasha Romanuff",
-      "Salary": "85000",
+      "name": "Clint Barton",
+      "salary": 75000,
       "id": 6
+    },
+    {
+      "name": "Nick Fury",
+      "salary": 85000,
+      "id": 7
+    },
+    {
+      "name": "Scott Lang",
+      "salary": 95000,
+      "id": 8
     }
   ]
 }

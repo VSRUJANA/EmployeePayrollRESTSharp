@@ -39,7 +39,7 @@ namespace EmployeePayroll_RESTSharp
 
             // Assert
             Assert.AreEqual(response.StatusCode, System.Net.HttpStatusCode.OK);
-            Assert.AreEqual(5, employeeList.Count);
+            Assert.AreEqual(8, employeeList.Count);
 
             // Print all employees
             foreach (var item in employeeList)
@@ -49,7 +49,7 @@ namespace EmployeePayroll_RESTSharp
         }
 
         [TestMethod]
-        public void givenEmployee_OnPost_ShouldReturnAddedEmployee()
+        public void GivenEmployee_OnPost_ShouldReturnAddedEmployee()
         {
             // Request the client by giving resource url and method to perform
             RestRequest request = new RestRequest("/employees", Method.POST);
@@ -67,6 +67,34 @@ namespace EmployeePayroll_RESTSharp
             Assert.AreEqual(response.StatusCode, System.Net.HttpStatusCode.Created);
             Assert.AreEqual("Natasha Romanuff", employeeList.name);
             Assert.AreEqual(85000, employeeList.salary);
+        }
+
+        [TestMethod]
+        public void GivenMultipleEmployees_WhenPosted_ShouldReturnEmployeeListWithAddedEmployees()
+        {
+            List<Employee> list = new List<Employee>();
+            list.Add(new Employee { name = "Clint Barton", salary = 75000 });
+            list.Add(new Employee { name = "Nick Fury", salary = 85000 });
+            list.Add(new Employee { name = "Scott Lang", salary = 95000 });
+            foreach (Employee employee in list)
+            {
+                // Request the client by giving resource url and method to perform
+                RestRequest request = new RestRequest("/employees/create", Method.POST);
+
+                JObject jObject = new JObject();
+                jObject.Add("name", employee.name);
+                jObject.Add("salary", employee.salary);
+                request.AddParameter("application/json", jObject, ParameterType.RequestBody);
+
+                // Executing the request using client and saving the result in IrestResponse.
+                IRestResponse response = client.Execute(request);
+                Employee dataResponse = JsonConvert.DeserializeObject<Employee>(response.Content);
+
+                //Assert
+                Assert.AreEqual(response.StatusCode, System.Net.HttpStatusCode.Created);
+                Assert.AreEqual(employee.name, dataResponse.name);
+                Assert.AreEqual(employee.salary, dataResponse.salary);
+            }
         }
     }
 }
